@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileScript : MonoBehaviour
+public class ProjectileParent : MonoBehaviour
 {
     public float speed;
     public Rigidbody2D rb;
     private Vector2 screenBounds;
 
     public int damage;
-
+    
+    //enemy values
+    
 
     void Start()
     {
@@ -30,20 +32,7 @@ public class ProjectileScript : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-        
-        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-        if(enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-        
-        DestroyBullet();
-    }
-
-    private void DestroyBullet()
+    protected void DestroyBullet()
     {
         Destroy(gameObject);
     }
