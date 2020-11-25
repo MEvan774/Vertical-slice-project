@@ -30,7 +30,7 @@ public class PlayerHealth : HealthParent
 
     public override void TakeDamage(int damage)
     {
-        //Player Hit animatie
+        /*Maakt player onstervelijk na een hit*/
         if (!isInvulnerable)
         {
             Debug.Log("DAMAGE");

@@ -9,7 +9,6 @@ public class EnemyPlantBehavior : MonoBehaviour
     public float JumpSpeed;
     public float JumpLenght;
 
-    private bool isDown = true;
     private bool isJumping = false;
     private bool jumpReturn;
 
@@ -24,7 +23,7 @@ public class EnemyPlantBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         /*
         if (isDown && Time.time >= nextJump)
@@ -71,11 +70,11 @@ public class EnemyPlantBehavior : MonoBehaviour
     void JumpDrag()
     {
         if (!jumpReturn)
-            EnemyRB.AddForce(new Vector2(0, JumpSpeed), ForceMode2D.Impulse);
+            EnemyRB.AddForce(new Vector2(0, JumpSpeed * Time.fixedDeltaTime), ForceMode2D.Impulse);
         //transform.Translate(Vector2.up * JumpSpeed * Time.deltaTime);
 
         if (jumpReturn)
-            EnemyRB.AddForce(new Vector2(0, -JumpSpeed * 2), ForceMode2D.Impulse);
+            EnemyRB.AddForce(new Vector2(0, -JumpSpeed * 2 * Time.fixedDeltaTime), ForceMode2D.Impulse);
         //transform.Translate(Vector2.up * -JumpSpeed * Time.deltaTime);
     }
 }

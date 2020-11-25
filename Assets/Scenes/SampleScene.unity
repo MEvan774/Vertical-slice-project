@@ -135,9 +135,10 @@ GameObject:
   - component: {fileID: 31943583}
   - component: {fileID: 31943585}
   - component: {fileID: 31943586}
+  - component: {fileID: 31943587}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,6 +242,32 @@ MonoBehaviour:
   playerHealth: {fileID: 474251152}
   invulnerableTime: 5
   isInvulnerable: 0
+--- !u!61 &31943587
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31943582}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16}
+  m_EdgeRadius: 0
 --- !u!1 &76027576
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,6 +986,7 @@ GameObject:
   - component: {fileID: 1310172809}
   - component: {fileID: 1310172808}
   - component: {fileID: 1310172807}
+  - component: {fileID: 1310172806}
   - component: {fileID: 1310172805}
   m_Layer: 0
   m_Name: Enemy Paddo
@@ -981,13 +1009,32 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1310172806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310172804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddde87ba10f986f4cab235100617cafc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 31943584}
+  aggroRange: 10
+  isHiding: 0
+  fireRate: 0.2
+  firePoint: {fileID: 2060555703}
+  ProjectilePrefab: {fileID: 4439421517544585501, guid: 73af8a97f87c8924598caa08a09815e5,
+    type: 3}
 --- !u!114 &1310172807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,6 +1048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
+  isInvulnerable: 0
 --- !u!61 &1310172808
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1088,7 +1136,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.19, y: 0.15, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2060555703}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1277,8 +1326,9 @@ GameObject:
   - component: {fileID: 1619565469}
   - component: {fileID: 1619565474}
   - component: {fileID: 1619565473}
+  - component: {fileID: 1619565475}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1297,6 +1347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
+  isInvulnerable: 0
 --- !u!61 &1619565470
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1382,7 +1433,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619565468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.2, y: -0.13, z: 0}
+  m_LocalPosition: {x: 6.05, y: -2.92, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1402,7 +1453,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -1422,9 +1473,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpTimer: 3
-  JumpSpeed: 0.2
+  JumpSpeed: 5
   JumpLenght: 0.8
   EnemyRB: {fileID: 1619565473}
+--- !u!114 &1619565475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619565468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8be5c8a3aa38d45940f6f2987ed523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1686289720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,6 +1807,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022575991}
   m_CullTransparentMesh: 0
+--- !u!1 &2060555702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060555703}
+  m_Layer: 0
+  m_Name: FirePointPaddo
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2060555703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060555702}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1310172810}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2107699713
 GameObject:
   m_ObjectHideFlags: 0

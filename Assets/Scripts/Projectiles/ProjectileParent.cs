@@ -6,23 +6,19 @@ public class ProjectileParent : MonoBehaviour
 {
     public float speed;
     public Rigidbody2D rb;
-    private Vector2 screenBounds;
+    protected Vector2 screenBounds;
 
-    public int damage;
-    
-    //enemy values
-    
+    public int damage;    
 
-    void Start()
+    protected virtual void Start()
     {
         //sets screenBounds
         screenBounds = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
-        //movement
+        //Beweging
         rb.velocity = transform.right * speed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //out of bounds (bewerk nummers zodat hij later word gedestroyed)

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class EnemyHealth : HealthParent
 {
+    public bool isInvulnerable;
+
     public override void TakeDamage(int damage)
     {
-        //Sprite wit maken met shader?
+        if (!isInvulnerable)
+        {
+            //Sprite wit maken met shader?
 
-        base.TakeDamage(damage);
+            base.TakeDamage(damage);
+        }
     }
 
     protected override void Die()
