@@ -12,15 +12,15 @@ public class ProjectileParent : MonoBehaviour
 
     protected virtual void Start()
     {
-        //sets screenBounds
-        screenBounds = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-
         //Beweging
         rb.velocity = transform.right * speed;
     }
 
     void Update()
     {
+        //sets screenBounds
+        screenBounds = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+
         //out of bounds (bewerk nummers zodat hij later word gedestroyed)
         if (transform.position.x > screenBounds.x * 10 || transform.position.x < screenBounds.x * -10 || transform.position.y > screenBounds.y * 8)
         {
