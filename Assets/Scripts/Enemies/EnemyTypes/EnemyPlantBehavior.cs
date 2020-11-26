@@ -15,6 +15,8 @@ public class EnemyPlantBehavior : MonoBehaviour
     public Rigidbody2D EnemyRB;
 
     private Vector2 originalPos;
+    //public Vector2 endPos = new Vector2(0,0);
+    public Transform endPos;
 
     void Start()
     {
@@ -70,11 +72,13 @@ public class EnemyPlantBehavior : MonoBehaviour
     void JumpDrag()
     {
         if (!jumpReturn)
-            EnemyRB.AddForce(new Vector2(0, JumpSpeed * Time.fixedDeltaTime), ForceMode2D.Impulse);
+            EnemyRB.AddForce(new Vector2(0, JumpSpeed * Time.fixedDeltaTime), ForceMode2D.Force);
         //transform.Translate(Vector2.up * JumpSpeed * Time.deltaTime);
 
+        //transform.position = Vector2.Lerp(transform.position, endPos.position * 10, Time.deltaTime);
+
         if (jumpReturn)
-            EnemyRB.AddForce(new Vector2(0, -JumpSpeed * 2 * Time.fixedDeltaTime), ForceMode2D.Impulse);
+            EnemyRB.AddForce(new Vector2(0, -JumpSpeed * 2 * Time.fixedDeltaTime), ForceMode2D.Force);
         //transform.Translate(Vector2.up * -JumpSpeed * Time.deltaTime);
     }
 }
