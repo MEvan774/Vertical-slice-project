@@ -13,6 +13,8 @@ public class Movement : MonoBehaviour {
 	bool jump = false;
 
 	bool crouch = false;
+
+	bool lockMovement;
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +39,21 @@ public class Movement : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		// Move our character
+		if(!lockMovement)
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		else
+		controller.Move(0, crouch, jump);
+
 		jump = false;
 	}
+
+	public void LockMovementEvent()
+    {
+		lockMovement = true;
+    }
+
+	public void DelockMovementEvent()
+    {
+		lockMovement = false;
+    }
 }

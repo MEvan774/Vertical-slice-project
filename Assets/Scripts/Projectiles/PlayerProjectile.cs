@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerProjectile : ProjectileParent
 {
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.name);

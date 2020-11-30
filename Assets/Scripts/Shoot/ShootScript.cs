@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShootScript : MonoBehaviour
 {
@@ -15,21 +16,26 @@ public class ShootScript : MonoBehaviour
     public Quaternion rotatePos = new Quaternion(90, 0, 0 ,0);
 
     //movement
-    bool stopMovement = false;
+    public bool stopMovement = false;
+    public bool direction = false;//Checkt als player links of rechts is
+    private bool GroundCheck;
 
-    bool direction = false;//Checkt als player links of rechts is
+    public UnityEvent lockInPlace;
+    public UnityEvent deLockPlace;
 
     void Update()
     {
-        if (Input.GetKey("z"))
+        if (Input.GetKey("c"))
         {
             stopMovement = true;
-            Debug.Log("Z is pressed");
+            lockInPlace.Invoke();
+            Debug.Log("C is pressed");
             //Activate Event voor movement
         }
         else
         {
             stopMovement = false;
+            deLockPlace.Invoke();
         }
 
         if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
@@ -69,14 +75,19 @@ public class ShootScript : MonoBehaviour
         GameObject bullet = Instantiate(ProjectilePrefab, firePoint.position, rotatePos);
     }
 
-    /*!--Events om schiet richting links of rechts te zetten--!*/
-    public void MoveRightEvent()
+    public void Left()
+    {
+        direction = true;
+    }
+
+    public void Right()
     {
         direction = false;
     }
 
-    public void MoveLeftEvent()
+    public void GroundEvent()
     {
-        direction = true;
+
     }
+
 }

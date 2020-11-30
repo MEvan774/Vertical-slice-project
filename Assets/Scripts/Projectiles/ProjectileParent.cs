@@ -6,9 +6,11 @@ public class ProjectileParent : MonoBehaviour
 {
     public float speed;
     public Rigidbody2D rb;
+
+    [SerializeField]
     protected Vector2 screenBounds;
 
-    public int damage;    
+    public int damage;
 
     protected virtual void Start()
     {
