@@ -6,54 +6,93 @@ public class Movement : MonoBehaviour {
 
 	public CharacterController2D controller;
 
-	public float runSpeed = 40f;
+	Rigidbody2D rb;
 
-	float horizontalMove = 0f;
+	[SerializeField] private float runSpeed = 40f;
+
+	float movementY = 0f;
 
 	bool jump = false;
 
 	bool crouch = false;
-
-	bool lockMovement;
 	
-	// Update is called once per frame
+	IEnumerator dashCoroutine;
+	bool isDashing;
+	bool canDash = true;
+	float direction = 1;
+	float normalGravity;
+
+	void Start()
+	{
+		rb = GetComponent<Rigidbody2D>();
+		normalGravity = rb.gravityScale;
+	}
+	
+	
 	void Update () {
 
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+		 movementY = Input.GetAxisRaw("Horizontal") * runSpeed; //links, rechts lopen 
 
-		if (Input.GetButtonDown("Jump"))
+		if (Input.GetButtonDown("Jump")) //button aangemaakt voor de characterController 2D
 		{
 			jump = true;
 		}
 
-		if (Input.GetButtonDown("Crouch"))
+		if (Input.GetButtonDown("Crouch")) //button aangemaakt voor de characterController 2D
 		{
 			crouch = true;
-		} else if (Input.GetButtonUp("Crouch"))
+		} else if (Input.GetButtonUp("Crouch")) //button aangemaakt voor de characterController 2D
 		{
 			crouch = false;
+		}
+		
+	  
+		if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
+		{
+			dashCoroutine = Dash(.1f,5);
+			StartCoroutine(dashCoroutine);
+			
+			if (dashCoroutine != null)
+			{
+				StopCoroutine(dashCoroutine);
+			}
+			dashCoroutine = Dash(.1f, 1);
+			StartCoroutine(dashCoroutine);
+		}
+
+		if (movementY != 0)
+		{
+			direction = movementY;
 		}
 
 	}
 
 	void FixedUpdate ()
 	{
-		// Move our character
-		if(!lockMovement)
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-		else
-		controller.Move(0, crouch, jump);
-
+		//beweeg de player
+		controller.Move(movementY * Time.fixedDeltaTime, crouch, jump);
 		jump = false;
+
+		if (isDashing)
+		{
+			rb.AddForce(new Vector2(direction * 0.5f,0), ForceMode2D.Impulse);
+		}
 	}
 
-	public void LockMovementEvent()
-    {
-		lockMovement = true;
-    }
-
-	public void DelockMovementEvent()
-    {
-		lockMovement = false;
-    }
+	IEnumerator Dash(float dashDuration, float dashCooldown)
+	{
+		Vector2 originalVelocity = rb.velocity;
+		isDashing = true;
+		canDash = false;
+		rb.gravityScale = 0;
+		rb.velocity = originalVelocity;
+		yield return new WaitForSeconds(dashDuration);
+		
+		isDashing = false;
+		rb.gravityScale = normalGravity;
+		rb.velocity = originalVelocity;
+		
+		yield return new WaitForSeconds(dashCooldown);
+		canDash = true;
+	}
 }
