@@ -8,6 +8,9 @@ public class ShootScript : MonoBehaviour
     public GameObject ProjectilePrefab;
     public Transform firePoint;//punt waaruit de bullet komt
 
+    //Sounds
+    public AudioManager sound;
+
     //FireRate
     public float fireRate;
     private float nextTimeToFire;
@@ -38,7 +41,7 @@ public class ShootScript : MonoBehaviour
             deLockPlace.Invoke();
         }
 
-        if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+        if (Input.GetKey("x") && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
@@ -49,19 +52,19 @@ public class ShootScript : MonoBehaviour
     {
         if (stopMovement)
         {
-            if (Input.GetKey("d") && !Input.GetKey("w"))//Rechts
+            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.UpArrow))//Rechts
                 rotatePos = new Quaternion(0, 0, 0, 0);
 
-            if (Input.GetKey("d") && Input.GetKey("w"))//RechtsBoven
+            if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow))//RechtsBoven
                 rotatePos = new Quaternion(180, 90, 0, 0);
 
-            if (Input.GetKey("w") && !Input.GetKey("a") && !Input.GetKey("d"))//Boven
+            if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))//Boven
                 rotatePos = new Quaternion(90, 90, 0, 0);
 
-            if (Input.GetKey("a") && Input.GetKey("w"))//LinksBoven
+            if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow))//LinksBoven
                 rotatePos = new Quaternion(180, 320, 0, 0);
 
-            if (Input.GetKey("a") && !Input.GetKey("w"))//links
+            if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))//links
                 rotatePos = new Quaternion(0, 320, 0, 0);
         }
         else//Checkt welk richting player staat
@@ -73,6 +76,9 @@ public class ShootScript : MonoBehaviour
 
         }
         GameObject bullet = Instantiate(ProjectilePrefab, firePoint.position, rotatePos);
+
+
+        sound.play("fire");
     }
 
     public void Left()

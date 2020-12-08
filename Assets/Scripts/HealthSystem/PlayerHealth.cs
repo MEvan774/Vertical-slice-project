@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : HealthParent
 {
     [Header("Player HP Text")]
-    public Text playerHealth;
+    public TMP_Text playerHealth;
 
     public float invulnerableTime;
     public bool isInvulnerable = false;
