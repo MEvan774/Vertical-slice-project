@@ -10,7 +10,7 @@ public class EnemyProjectile : ProjectileParent
 
     protected override void Start()
     {
-        screenBounds = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        //screenBounds = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
         //Zoekt "Player" Tag en gaat op de player af 
         target = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +20,7 @@ public class EnemyProjectile : ProjectileParent
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
+        //Debug.Log(other.name);
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         //EnemyHealth parry = other.GetComponent<playerParry>();
         if (player != null)

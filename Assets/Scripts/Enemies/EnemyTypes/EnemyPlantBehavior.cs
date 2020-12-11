@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyPlantBehavior : MonoBehaviour
 {
+    public Animator anim;
+
     public float jumpTimer;
 
     public float JumpSpeed;
@@ -36,7 +38,7 @@ public class EnemyPlantBehavior : MonoBehaviour
         */
         if(isJumping)
         {
-            Debug.Log("JUMPDRAG");
+            //Debug.Log("JUMPDRAG");
             JumpDrag();
         }
         else
@@ -51,14 +53,16 @@ public class EnemyPlantBehavior : MonoBehaviour
 
     IEnumerator Jump()
     {
-        Debug.Log("Enemy is Jumping");
+        anim.SetTrigger("Reset");
+        //Debug.Log("Enemy is Jumping");
         //transform.localPosition = new Vector2(0, JumpLenght);
         isJumping = true;
 
         jumpReturn = false;
         yield return new WaitForSeconds(JumpLenght);
+        anim.SetTrigger("ReadyToBite");
         jumpReturn = true;
-
+        anim.SetTrigger("Bite");
         yield return new WaitForSeconds(JumpLenght * 2);
 
         isJumping = false;
@@ -72,7 +76,7 @@ public class EnemyPlantBehavior : MonoBehaviour
     void JumpDrag()
     {
         if (!jumpReturn)
-            EnemyRB.AddForce(new Vector2(0, JumpSpeed * Time.fixedDeltaTime), ForceMode2D.Force);
+        EnemyRB.AddForce(new Vector2(0, JumpSpeed * Time.fixedDeltaTime), ForceMode2D.Force);
         //transform.Translate(Vector2.up * JumpSpeed * Time.deltaTime);
 
         //transform.position = Vector2.Lerp(transform.position, endPos.position * 10, Time.deltaTime);

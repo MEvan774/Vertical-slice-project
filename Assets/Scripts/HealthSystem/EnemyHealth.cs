@@ -6,6 +6,19 @@ public class EnemyHealth : HealthParent
 {
     public bool isInvulnerable;
 
+    private Renderer render;
+
+    private Color hitColor = Color.red;
+
+    private Color normalColor = Color.white;
+
+    private float hitDuration = 0.1f;
+
+    private void Awake()
+    {
+        render = GetComponent<Renderer>();
+    }
+
     public override void TakeDamage(int damage)
     {
         if (!isInvulnerable)
@@ -13,7 +26,15 @@ public class EnemyHealth : HealthParent
             //Sprite wit maken met shader?
 
             base.TakeDamage(damage);
+            StartCoroutine(HitFlash());
         }
+    }
+
+    IEnumerator HitFlash()
+    {
+        render.material.color = hitColor;
+        yield return new WaitForSeconds(hitDuration);
+        render.material.color = normalColor;
     }
 
     protected override void Die()

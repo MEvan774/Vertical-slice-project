@@ -10,7 +10,7 @@ public class HitDetection : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
+        //Debug.Log(other.name);
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         if (player != null)
         {

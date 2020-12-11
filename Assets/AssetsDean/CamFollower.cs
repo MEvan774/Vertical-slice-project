@@ -16,7 +16,10 @@ public class CamFollower : MonoBehaviour
 
     private void LateUpdate() 
     {
-        Vector3 desiredPosition = target.position + offset;
+        //Vector3 desiredPosition = target.position + offset;
+
+        Vector3 desiredPosition = new Vector3(target.position.x, transform.position.y, transform.position.z);
+
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
     }
 

@@ -6,7 +6,10 @@ using UnityEngine.Events;
 public class ShootScript : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
+    public GameObject ShootStart;
     public Transform firePoint;//punt waaruit de bullet komt
+
+    public Animator anim;
 
     //Sounds
     public AudioManager sound;
@@ -46,6 +49,17 @@ public class ShootScript : MonoBehaviour
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
         }
+
+        if (Input.GetKeyDown("x"))
+        {
+            sound.play("fire");
+            anim.SetBool("Shoot", true);
+        }
+        else if (Input.GetKeyUp("x"))
+        {
+            sound.Stop("fire");
+            anim.SetBool("Shoot", false);
+        }
     }
 
     void Shoot()
@@ -75,10 +89,11 @@ public class ShootScript : MonoBehaviour
             rotatePos = new Quaternion(0, 320, 0, 0);//Links
 
         }
+        GameObject startShoot = Instantiate(ShootStart, firePoint.position, rotatePos);
         GameObject bullet = Instantiate(ProjectilePrefab, firePoint.position, rotatePos);
 
 
-        sound.play("fire");
+        //sound.play("fire");
     }
 
     public void Left()
