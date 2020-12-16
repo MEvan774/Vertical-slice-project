@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemyPaddoBehavior : MonoBehaviour
 {
     public Transform player;
-    public float aggroRange;
+    public float minAggroRange;
+    public float maxAggroRange;
+
+    public Animator anim;
 
     [SerializeField]
     private bool isHiding = true;
@@ -31,12 +34,12 @@ public class EnemyPaddoBehavior : MonoBehaviour
     {
 
         float distToPlayer = Vector2.Distance(transform.position, player.position);
-        if(distToPlayer <= aggroRange)//Checkt of player te dicht bij is.
+        if(distToPlayer <= minAggroRange)//Checkt of player te dicht bij is.
         {
             isHiding = true;
             health.isInvulnerable = true;
         }
-        else//Checkt als player op afstand is, hij valt dan aan!
+        else// if(distToPlayer >= maxAggroRange)//Checkt als player op afstand is, hij valt dan aan!
         {
             isHiding = false;
             health.isInvulnerable = false;
@@ -44,18 +47,18 @@ public class EnemyPaddoBehavior : MonoBehaviour
         }
     }
 
+    void ShootEvent()
+    {
+        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+    }
+
     void ShootFunction()
     {
         if(Time.time >= nextTimeToFire)//FireRate
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
+            anim.SetTrigger("Attack");
         }
-    }
-
-    void Shoot()
-    {
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
     }
 }
 

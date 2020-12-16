@@ -14,6 +14,8 @@ public class EnemyHealth : HealthParent
 
     private float hitDuration = 0.1f;
 
+    public GameObject DeathEffect;
+
     private void Awake()
     {
         render = GetComponent<Renderer>();
@@ -39,7 +41,7 @@ public class EnemyHealth : HealthParent
 
     protected override void Die()
     {
-        //Instantiate deatheffect
+        GameObject effect = Instantiate(DeathEffect, transform.position, transform.rotation);
         base.Die();
         Debug.Log("EnemyKilled");
     }

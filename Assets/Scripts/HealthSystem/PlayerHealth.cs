@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class PlayerHealth : HealthParent
 {
@@ -14,6 +15,12 @@ public class PlayerHealth : HealthParent
 
     public float invulnerableTime;
     public bool isInvulnerable = false;
+
+    public float flashAlpha = 0;
+    public float normalAlpha = 1f;
+    private float flashSpeed = 0.05f;
+
+    public UnityEvent DieEvent;
 
     protected override void Start()
     {
@@ -30,6 +37,7 @@ public class PlayerHealth : HealthParent
             isInvulnerable = true;
             base.TakeDamage(damage);
             StartCoroutine(InvulnerableState());
+            StartCoroutine(InvulnerableFlash());
             shake.Shake();
 
             if (currentHp >= 2)
@@ -45,6 +53,7 @@ public class PlayerHealth : HealthParent
             else
             {
                 playerHealth.text = "DEAD";
+                DieEvent.Invoke();
             }
         }
     }
@@ -55,6 +64,16 @@ public class PlayerHealth : HealthParent
         yield return new WaitForSeconds(invulnerableTime);
         isInvulnerable = false;
         //Debug.Log("TimeUp");
+    }
+
+    IEnumerator InvulnerableFlash()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flashAlpha);
+        yield return new WaitForSeconds(flashSpeed);
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, normalAlpha);
+        yield return new WaitForSeconds(flashSpeed);
+        if (isInvulnerable)
+        StartCoroutine(InvulnerableFlash());
     }
 
     protected override void Die()

@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour {
 	public CharacterController2D controller;
 	public Animator anim;
 
+	public GameObject coinEffect;
+
 	public float runSpeed = 40f;
 
 	float horizontalMove = 0f;
@@ -56,6 +58,16 @@ public class Movement : MonoBehaviour {
 		if (Input.GetButtonDown("Jump"))
 		{
 			jump = true;
+			anim.SetBool("Jump", true);
+		}
+
+		if (jump)
+		{
+			anim.SetBool("Jump", true);
+		}
+		else
+		{
+			anim.SetBool("Jump", false);
 		}
 
 		if (Input.GetButtonDown("Crouch"))
@@ -115,7 +127,6 @@ public class Movement : MonoBehaviour {
 		controller.Move(0, crouch, jump);
 
 		jump = false;
-
 		if (isDashing)
 		{
 			rb.AddForce(new Vector2(DashSpeed * 0.5f, 0), ForceMode2D.Impulse);
@@ -128,10 +139,17 @@ public class Movement : MonoBehaviour {
 		if (other.gameObject.CompareTag("Coin"))
 		{
 			Destroy(other.gameObject);
+
+			GameObject effect = Instantiate(coinEffect, other.transform.position, transform.rotation);
 		}
 	}
 
-	public void TurnLeftEvent()
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+		anim.SetBool("Jump", false);
+	}
+
+    public void TurnLeftEvent()
     {
 		DashSpeed = leftDashSpeed;
     }

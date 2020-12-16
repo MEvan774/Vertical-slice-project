@@ -17,6 +17,9 @@ public class EnemyPath : MonoBehaviour
     public float minDistance;
     public float speed;
 
+    public Animator anim;
+    bool isTurning = false;
+
     //public UnityEvent attackEvent;
 
     private Vector3 beginPos;
@@ -42,23 +45,35 @@ public class EnemyPath : MonoBehaviour
             {
                 //Debug.Log("destination");
                 //gameObject.transform.LookAt(wayPoints[currentPoint].transform.position);
-                transform.position = Vector2.MoveTowards(transform.position, wayPoints[currentPoint].transform.position, speed * Time.deltaTime);
-                gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+                if (!isTurning)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, wayPoints[currentPoint].transform.position, speed * Time.deltaTime);
+                    gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+                }
             }
             else
             {
+                isTurning = true;
                 Vector3 theScale = transform.localScale;
                 theScale.x *= -1;
                 transform.localScale = theScale;
+                anim.SetTrigger("Turn");
+
 
                 //transform.LookAt(transform.position + wayPoints[currentPoint].forward);
 
-                Debug.Log("ELSE");
+                //Debug.Log("ELSE");
                 Debug.Log(wayPoints[currentPoint]);
                 currentPoint++;
             }
         }
 
+    }
+
+
+    public void TurnEvent()
+    {
+        isTurning = false;
     }
 
     void ResetArray()

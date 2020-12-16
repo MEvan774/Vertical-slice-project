@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartShoot : MonoBehaviour
+public class Effect : MonoBehaviour
 {
 
     public void DestroyEvent()
