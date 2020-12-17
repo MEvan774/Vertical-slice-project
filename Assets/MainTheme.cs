@@ -8,4 +8,7 @@ public class MainTheme : MonoBehaviour
     {
         FindObjectOfType<AudioManager>().play("THEME");
     }
+
+
 }
+

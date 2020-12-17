@@ -61,15 +61,6 @@ public class Movement : MonoBehaviour {
 			anim.SetBool("Jump", true);
 		}
 
-		if (jump)
-		{
-			anim.SetBool("Jump", true);
-		}
-		else
-		{
-			anim.SetBool("Jump", false);
-		}
-
 		if (Input.GetButtonDown("Crouch"))
 		{
 			//Debug.LogError("Fucking crouchs");
@@ -147,6 +138,7 @@ public class Movement : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
 		anim.SetBool("Jump", false);
+		
 	}
 
     public void TurnLeftEvent()

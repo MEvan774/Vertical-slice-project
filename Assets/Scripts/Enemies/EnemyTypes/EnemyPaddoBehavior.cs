@@ -36,14 +36,16 @@ public class EnemyPaddoBehavior : MonoBehaviour
         float distToPlayer = Vector2.Distance(transform.position, player.position);
         if(distToPlayer <= minAggroRange)//Checkt of player te dicht bij is.
         {
-            isHiding = true;
-            health.isInvulnerable = true;
-        }
-        else// if(distToPlayer >= maxAggroRange)//Checkt als player op afstand is, hij valt dan aan!
-        {
+
+
             isHiding = false;
             health.isInvulnerable = false;
             ShootFunction();
+        }
+        else// if(distToPlayer >= maxAggroRange)//Checkt als player op afstand is, hij valt dan aan!
+        {
+            isHiding = true;
+            health.isInvulnerable = true;
         }
     }
 

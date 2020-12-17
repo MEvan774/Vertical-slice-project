@@ -8,7 +8,13 @@ using UnityEngine.Events;
 public class EnemyPath : MonoBehaviour
 {
     public Transform[] wayPoints;
+    public Transform player;
+    public float aggroRange;
+    bool isHiding = false;
+    public EnemyHealth health;
+    public HitDetection hitDetect;
 
+    public Animator anim;
 
     public int currentPoint;
     private int endPoint;
@@ -17,7 +23,6 @@ public class EnemyPath : MonoBehaviour
     public float minDistance;
     public float speed;
 
-    public Animator anim;
     bool isTurning = false;
 
     //public UnityEvent attackEvent;
@@ -33,6 +38,32 @@ public class EnemyPath : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+
+        float distToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distToPlayer <= aggroRange)//Checkt of player te dicht bij is.
+        {
+            Debug.Log("Hiding");
+            isHiding = true;
+            health.isInvulnerable = true;
+            hitDetect.hitOn = false;
+            anim.SetBool("Hide", true);
+        }
+        else// if(distToPlayer >= maxAggroRange)//Checkt als player op afstand is, hij valt dan aan!
+        {
+            if (isHiding)
+            {
+                anim.SetBool("Hide", false);
+            }
+            if (!isHiding)
+            {
+                walking();
+            }
+        }
+
+    }
+
+    void walking()
     {
         if (currentPoint == endPoint)
         {
@@ -67,9 +98,15 @@ public class EnemyPath : MonoBehaviour
                 currentPoint++;
             }
         }
-
     }
 
+    void HideOutEvent()
+    {
+        isHiding = false;
+        health.isInvulnerable = false;
+        hitDetect.hitOn = true;
+        Debug.LogWarning("HideOut");
+    }
 
     public void TurnEvent()
     {

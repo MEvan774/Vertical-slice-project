@@ -58,6 +58,16 @@ public class PlayerHealth : HealthParent
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Debug.Log(other.name);
+        Respawn respawn = other.GetComponent<Respawn>();
+        if (respawn != null)
+        {
+            currentHp = 0;
+        }
+    }
+
     IEnumerator InvulnerableState()
     {
         //Debug.Log("STARTTIME");
@@ -80,6 +90,7 @@ public class PlayerHealth : HealthParent
     {
         //Activate GameOver
         sound.play("playerDeath");
+        sound.Stop("THEME");
         base.Die();
         Debug.Log("PlayerKilled");
     }
